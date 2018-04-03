@@ -1,11 +1,9 @@
 ---
-title: API Reference
+title: Exposure API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
+  - php
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -19,9 +17,9 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Exposure Marketing API! You can use our API help capture data and run promotions such as sweepstakes and contests.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
@@ -29,211 +27,98 @@ This example API documentation page was created with [Slate](https://github.com/
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: Bearer YOUR-TOKEN-HERE"
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+<?php
 
-let api = kittn.authorize('meowmeowmeow');
+$headers = [
+  'Authorization' => 'Bearer YOUR-TOKEN-HERE',
+];
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+?>
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `YOUR-TOKEN-HERE` with your API token.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Exposure Marketing uses API tokens to allow access to the API. You can request a new API token at [developer portal](http://example.com/developers).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+The API token should be included in all requests in an Authorization header, like this:
 
-`Authorization: meowmeowmeow`
+`Authorization: Bearer YOUR-TOKEN-HERE`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 </aside>
 
-# Kittens
+# Entries
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Submit an entry
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://{base_url}/api/v1/promotions/{identifier}/entries" \
+  -H "Authorization: Bearer YOUR-TOKEN-HERE" \
+  -X POST \
+  -d "email=jdoe@example.com&first_name=John&last_name=Doe"
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+<?php
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+// TODO
+
+?>
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+{
+  "data": {
+    "id": 1001,
+    "entered_at": 1520366874,
+    "created_at": 1520366874
   }
-]
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint creates new entries.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST https://{base_url}/api/v1/promotions/{identifier}/entries`
 
-### Query Parameters
+### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Parameter | Description
+--------- | -----------
+`base_url` | Base URL to the API
+`identifier` | The identifier of the promotion
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+### Request Parameters
+
+Parameter | Description
+--------- | -----------
+`email` | Email address of the registrant. Required if promotion fingerprint type is set to *Email*, otherwise optional. (string, limit: 191 characters)
+`fingerprint` | Custom identifier of the registrant. Required if promotion fingerprint type is set to *Custom*, otherwise ignored. (string, limit: 191 characters)
+`entered_at` | Custom entry date. Optional. (string, yyyy-mm-dd format)
+`source` | Source of registrant (e.g. newsletter, banner). Optional. (string, limit: 50 characters)
+`remote_ip` | IP address of the registrant. Optional. (string, IPv4 or IPv6 format)
+`first_name` | First name of the registrant. Optional. (string, limit: 50 characters)
+`last_name` | Last name of the registrant. Optional. (string, limit: 50 characters)
+`address_1` | Address line 1 of the registrant. Optional. (string, limit: 100 characters)
+`address_2` | Address line 2 of the registrant. Optional. (string, limit: 100 characters)
+`city` | City of the registrant. Optional. (string, limit: 100 characters)
+`state` | State/province of the registrant. Optional. (string, limit: 50 characters)
+`postal_code` | Postal code of the registrant. Optional. (string, limit: 10 characters)
+`country` | Country of the registrant. Optional. (string, limit: 50 characters)
+`phone` | Telephone number of the registrant. Optional. (string, limit: 50 characters)
+
+<aside class="notice">
+Custom fingerprints allow you to uniquely identify registrants based on criteria other than email address, such as cell phone number, external user id, or anything else. But with great power comes great responsibility. It is not recommended to allow this value to be supplied directly by the user, and instead determine it server-side, or at least convert all user-supplied values into a common format.
 </aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
