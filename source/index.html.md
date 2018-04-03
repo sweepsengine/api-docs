@@ -58,7 +58,7 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 
 # Entries
 
-## Submit an entry
+## Submit an Entry
 
 ```shell
 curl "https://{base_url}/api/v1/promotions/{identifier}/entries" \
