@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Exposure API Reference</title>
+    <title>SweepsEngine API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -238,7 +238,7 @@
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://www.sweepsengine.io/register'>Create an Account</a></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -246,11 +246,9 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Exposure Marketing API! You can use our API help capture data and run promotions such as sweepstakes and contests.</p>
+<p>Welcome to the <a href="https://www.sweepsengine.io">SweepsEngine API</a>! You can use our API help capture data and run promotions such as sweepstakes and contests.</p>
 
 <p>We have language bindings in Shell and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
@@ -271,7 +269,7 @@ curl <span class="s2">"api_endpoint_here"</span>
 <p>Make sure to replace <code>YOUR-TOKEN-HERE</code> with your API token.</p>
 </blockquote>
 
-<p>Exposure Marketing uses API tokens to allow access to the API. You can request a new API token at <a href="http://example.com/developers">developer portal</a>.</p>
+<p>SweepsEngine uses API tokens to allow access to the API. View or request a new API token on your profile&#39;s <a href="https://www.sweepsengine.io/profile/api">API Settings</a> page.</p>
 
 <p>The API token should be included in all requests in an Authorization header, like this:</p>
 
@@ -280,7 +278,7 @@ curl <span class="s2">"api_endpoint_here"</span>
 <aside class="notice">
 You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 </aside>
-<h1 id='entries'>Entries</h1><h2 id='submit-an-entry'>Submit an Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://{base_url}/api/v1/promotions/{identifier}/entries"</span> <span class="se">\</span>
+<h1 id='entries'>Entries</h1><h2 id='submit-an-entry'>Submit an Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer YOUR-TOKEN-HERE"</span> <span class="se">\</span>
   -X POST <span class="se">\</span>
   -d <span class="s2">"email=jdoe@example.com&amp;first_name=John&amp;last_name=Doe"</span>
@@ -303,7 +301,7 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 </span></code></pre>
 <p>This endpoint creates new entries.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://{base_url}/api/v1/promotions/{identifier}/entries</code></p>
+<p><code>POST https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -311,10 +309,6 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><code>base_url</code></td>
-<td>Base URL to the API</td>
-</tr>
 <tr>
 <td><code>identifier</code></td>
 <td>The identifier of the promotion</td>
@@ -337,7 +331,7 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 </tr>
 <tr>
 <td><code>entered_at</code></td>
-<td>Custom entry date. Optional. (string, yyyy-mm-dd format)</td>
+<td>Custom entry date. Optional. (string, allows most common date formats)</td>
 </tr>
 <tr>
 <td><code>source</code></td>
@@ -432,6 +426,11 @@ For handling errors we recommend inspecting the value of <code>code</code>, as h
 <td>Registrant has recevied max entries for this promotion or period.</td>
 </tr>
 <tr>
+<td><code>NOT-ACTIVE</code></td>
+<td>403</td>
+<td>User account is not active.</td>
+</tr>
+<tr>
 <td><code>NOT-AUTHENTICATED</code></td>
 <td>401</td>
 <td>User could not be authenticated. Usually the API token is unknown/missing.</td>
@@ -445,6 +444,11 @@ For handling errors we recommend inspecting the value of <code>code</code>, as h
 <td><code>NOT-OPEN</code></td>
 <td>404</td>
 <td>Promotion is not open or currently accepting entries.</td>
+</tr>
+<tr>
+<td><code>UNKNOWN-ERROR</code></td>
+<td>500</td>
+<td>An unknown error has occurred on our end.</td>
 </tr>
 <tr>
 <td><code>VALIDATION-FAILED</code></td>
