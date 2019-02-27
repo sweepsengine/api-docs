@@ -1,12 +1,12 @@
 ---
-title: Exposure API Reference
+title: SweepsEngine API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - php
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://www.sweepsengine.io/register'>Create an Account</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,11 +17,9 @@ search: true
 
 # Introduction
 
-Welcome to the Exposure Marketing API! You can use our API help capture data and run promotions such as sweepstakes and contests.
+Welcome to the [SweepsEngine API](https://www.sweepsengine.io)! You can use our API help capture data and run promotions such as sweepstakes and contests.
 
 We have language bindings in Shell and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
@@ -46,7 +44,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
 > Make sure to replace `YOUR-TOKEN-HERE` with your API token.
 
-Exposure Marketing uses API tokens to allow access to the API. You can request a new API token at [developer portal](http://example.com/developers).
+SweepsEngine uses API tokens to allow access to the API. View or request a new API token on your profile's [API Settings](https://www.sweepsengine.io/profile/api) page.
 
 The API token should be included in all requests in an Authorization header, like this:
 
@@ -61,7 +59,7 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 ## Submit an Entry
 
 ```shell
-curl "https://{base_url}/api/v1/promotions/{identifier}/entries" \
+curl "https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries" \
   -H "Authorization: Bearer YOUR-TOKEN-HERE" \
   -X POST \
   -d "email=jdoe@example.com&first_name=John&last_name=Doe"
@@ -91,13 +89,12 @@ This endpoint creates new entries.
 
 ### HTTP Request
 
-`POST https://{base_url}/api/v1/promotions/{identifier}/entries`
+`POST https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-`base_url` | Base URL to the API
 `identifier` | The identifier of the promotion
 
 ### Request Parameters
@@ -106,7 +103,7 @@ Parameter | Description
 --------- | -----------
 `email` | Email address of the registrant. Required if promotion fingerprint type is set to *Email*, otherwise optional. (string, limit: 191 characters)
 `fingerprint` | Custom identifier of the registrant. Required if promotion fingerprint type is set to *Custom*, otherwise ignored. (string, limit: 191 characters)
-`entered_at` | Custom entry date. Optional. (string, yyyy-mm-dd format)
+`entered_at` | Custom entry date. Optional. (string, allows most common date formats)
 `source` | Source of registrant (e.g. newsletter, banner). Optional. (string, limit: 50 characters)
 `remote_ip` | IP address of the registrant. Optional. (string, IPv4 or IPv6 format)
 `first_name` | First name of the registrant. Optional. (string, limit: 50 characters)

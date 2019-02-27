@@ -25,8 +25,10 @@ Here is a full listing of codes, HTTP statuses, and their meaning.
 Error Code | HTTP Status | Meaning
 ---------- | ----------- | -------
 `MAX-ENTRIES` | 422 | Registrant has recevied max entries for this promotion or period.
+`NOT-ACTIVE` | 403 | User account is not active.
 `NOT-AUTHENTICATED` | 401 | User could not be authenticated. Usually the API token is unknown/missing.
 `NOT-FOUND` | 404 | Resource not found, or user does not have access to it.
 `NOT-OPEN` | 404 | Promotion is not open or currently accepting entries.
+`UNKNOWN-ERROR` | 500 | An unknown error has occurred on our end.
 `VALIDATION-FAILED` | 400 | There were one or more validation failures for the request. <code>message</code> will contain more detail about the first error encountered.
 
