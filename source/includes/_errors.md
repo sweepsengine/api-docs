@@ -17,7 +17,7 @@ Parameter | Description
 `message` | More detail about the error. For some errors (e.g. validation failure), message may vary to include more information.
 
 <aside class="notice">
-For handling errors we recommend inspecting the value of <code>code</code>, as http status codes may be used for multiple errors, and the detail provided by `message` is subject to change.
+For handling errors we recommend inspecting the value of <code>code</code>, as http status codes may be used for multiple errors, and the detail provided by <code>message</code> is subject to change.
 </aside>
 
 Here is a full listing of codes, HTTP statuses, and their meaning.
