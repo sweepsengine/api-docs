@@ -226,10 +226,18 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
+            <a href="#promotions" class="toc-h1 toc-link" data-title="Promotions">Promotions</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#show-promotion" class="toc-h2 toc-link" data-title="Show Promotion">Show Promotion</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#entries" class="toc-h1 toc-link" data-title="Entries">Entries</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#submit-an-entry" class="toc-h2 toc-link" data-title="Submit an Entry">Submit an Entry</a>
+                    <a href="#create-entry" class="toc-h2 toc-link" data-title="Create Entry">Create Entry</a>
                   </li>
               </ul>
           </li>
@@ -248,60 +256,71 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the <a href="https://www.sweepsengine.io">SweepsEngine API</a>! You can use our API help capture data and run promotions such as sweepstakes and contests.</p>
 
-<p>We have language bindings in Shell and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>We have language examples in Shell and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: Bearer YOUR-TOKEN-HERE"</span>
+curl <span class="s2">"..."</span>
+  -H <span class="s2">"Authorization: Bearer {token}"</span>
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 
 <span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer YOUR-TOKEN-HERE'</span><span class="p">,</span>
+  <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer {token}'</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
-
-<span class="cp">?&gt;</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>YOUR-TOKEN-HERE</code> with your API token.</p>
+<p>Make sure to replace <code>{token}</code> with your API token.</p>
 </blockquote>
 
 <p>SweepsEngine uses API tokens to allow access to the API. View or request a new API token on your profile&#39;s <a href="https://www.sweepsengine.io/profile/api">API Settings</a> page.</p>
 
 <p>The API token should be included in all requests in an Authorization header, like this:</p>
 
-<p><code>Authorization: Bearer YOUR-TOKEN-HERE</code></p>
+<p><code>Authorization: Bearer {token}</code></p>
 
 <aside class="notice">
-You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
+You must replace <code>{token}</code> with your personal API token.
 </aside>
-<h1 id='entries'>Entries</h1><h2 id='submit-an-entry'>Submit an Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries"</span> <span class="se">\</span>
-  -H <span class="s2">"Authorization: Bearer YOUR-TOKEN-HERE"</span> <span class="se">\</span>
-  -X POST <span class="se">\</span>
-  -d <span class="s2">"email=jdoe@example.com&amp;first_name=John&amp;last_name=Doe"</span>
+<h1 id='promotions'>Promotions</h1><h2 id='show-promotion'>Show Promotion</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/{identifier}"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer {token}"</span>
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 
-<span class="c1">// TODO
-</span>
-<span class="cp">?&gt;</span>
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer {token}'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/</span><span class="si">{</span><span class="nv">identifier</span><span class="si">}</span><span class="s2">"</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>The above command returns JSON structured response like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1001</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"entered_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1520366874</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1520366874</span><span class="w">
+    </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{identifier}"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Awesome Sweeps"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"starts_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-16T00:00:00-05:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ends_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-16T00:00:00-05:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"America/Detroit"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Once"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates new entries.</p>
+<p>This enpoint returns details about a promotion.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries</code></p>
+<p><code>GET https://api.sweepsengine.io/api/v1/promotions/{identifier}</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -315,6 +334,104 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 </tr>
 </tbody></table>
 <h3 id='request-parameters'>Request Parameters</h3>
+<p>(none)</p>
+<h3 id='response-parameters'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>identifier</code></td>
+<td>The identifier of the promotion</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Promotion title</td>
+</tr>
+<tr>
+<td><code>starts_at</code></td>
+<td>Datetime of promotion start, in ISO 8601 format</td>
+</tr>
+<tr>
+<td><code>ends_at</code></td>
+<td>Datetime of promotion end, in ISO 8601 format</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>Timezone for the promotion</td>
+</tr>
+<tr>
+<td><code>frequency</code></td>
+<td>Allowed entry frequency (e.g. Once, Daily, Custom)</td>
+</tr>
+<tr>
+<td><code>fingerprint</code></td>
+<td>Fingerprint method (e.g. Email, Custom)</td>
+</tr>
+<tr>
+<td><code>is_open</code></td>
+<td>Is promotion currently open and accepting entries?</td>
+</tr>
+</tbody></table>
+<h1 id='entries'>Entries</h1><h2 id='create-entry'>Create Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer {token}"</span> <span class="se">\</span>
+  -X POST <span class="se">\</span>
+  -d <span class="s2">"email=jdoe@example.com&amp;first_name=John&amp;last_name=Doe"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer {token}'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
+    <span class="s1">'last_name'</span> <span class="o">=&gt;</span> <span class="s1">'Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'jdoe@example.com'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">"https://api.sweepsengine.io/api/v1/promotions/</span><span class="si">{</span><span class="nv">identifier</span><span class="si">}</span><span class="s2">/entries"</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured response like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1001</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"remote_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.2.10"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email campaign"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"entered_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-28T15:28:44-05:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-28T15:28:44-05:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates new entries.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://api.sweepsengine.io/api/v1/promotions/{identifier}/entries</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>identifier</code></td>
+<td>The identifier of the promotion</td>
+</tr>
+</tbody></table>
+<h3 id='request-parameters-2'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -382,6 +499,34 @@ You must replace <code>YOUR-TOKEN-HERE</code> with your personal API token.
 <aside class="notice">
 Custom fingerprints allow you to uniquely identify registrants based on criteria other than email address, such as cell phone number, external user id, or anything else. But with great power comes great responsibility. It is not recommended to allow this value to be supplied directly by the user, and instead determine it server-side, or at least convert all user-supplied values into a common format.
 </aside>
+<h3 id='response-parameters-2'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>Entry Id</td>
+</tr>
+<tr>
+<td><code>remote_ip</code></td>
+<td>Remote IP address of the registrant (if provided during request)</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>Source of the entry (if provided during request)</td>
+</tr>
+<tr>
+<td><code>entered_at</code></td>
+<td>Datetime of entry, in ISO 8601 format</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>Datetime of entry creation, in ISO 8601 format</td>
+</tr>
+</tbody></table>
 <h1 id='errors'>Errors</h1><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT-AUTHENTICATED"</span><span class="p">,</span><span class="w">
@@ -408,7 +553,7 @@ Custom fingerprints allow you to uniquely identify registrants based on criteria
 </tbody></table>
 
 <aside class="notice">
-For handling errors we recommend inspecting the value of <code>code</code>, as http status codes may be used for multiple errors, and the detail provided by `message` is subject to change.
+For handling errors we recommend inspecting the value of <code>code</code>, as http status codes may be used for multiple errors, and the detail provided by <code>message</code> is subject to change.
 </aside>
 
 <p>Here is a full listing of codes, HTTP statuses, and their meaning.</p>
